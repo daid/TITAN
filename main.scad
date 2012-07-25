@@ -1,4 +1,4 @@
-//$fs=0.4; $fa=5;
+$fs=0.4; $fa=5;
 explode = 0.0;
 headPosMin = -45; headPosMax = 35; zMoveMax = 70;
 headPosX = headPosMin + (headPosMax - headPosMin) * 0.0;
@@ -11,8 +11,8 @@ caseThickness = 3;
 
 bushingDiameter = 15;
 
-//assembly();
-wood3mm();
+assembly();
+//wood3mm();
 
 module assembly() {
 	xyStage();
@@ -54,15 +54,15 @@ module assembly() {
 
 module wood3mm() {
 	caseFront();
-	translate([181,   0]) caseBack();
-	translate([  0, 185]) caseSide();
-	translate([181, 185]) caseSide();
-	translate([  0,-185]) caseBottom();
-	translate([  0,2*185]) rotate(-90) zBasePlate();
-	translate([161,2*185]) zGuideHolder()
-	translate([161,-171]) zSidePlate();
-	translate([161,-211]) zSidePlate();
-	translate([181,-131]) zBackPlate();
+	translate([200,   0]) caseBack();
+	translate([  0, 200]) caseSide();
+	translate([200, 200]) caseSide();
+	translate([  0,-200]) caseBottom();
+	translate([  0,2*200]) rotate(-90) zBasePlate();
+	translate([200,2*200]) zGuideHolder()
+	translate([200,-180]) zSidePlate();
+	translate([200,-220]) zSidePlate();
+	translate([200,-260]) zBackPlate();
 	translate([20,0]) headBottomPlate();
 	translate([-20,0]) headBottomPlate();
 }

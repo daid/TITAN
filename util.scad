@@ -60,8 +60,8 @@ module woodConnector2() {
 }
 module woodConnector3(d=15) {
 	s = d*2/3;
-	translate([d,0]) square([s-laserOffset*2,caseThickness-laserOffset],center=true);
-	translate([-d,0]) square([s-laserOffset*2,caseThickness-laserOffset],center=true);
+	translate([d,0]) square([s-laserOffset*2,caseThickness-laserOffset*2],center=true);
+	translate([-d,0]) square([s-laserOffset*2,caseThickness-laserOffset*2],center=true);
 	if (enableWoodScrewconnectors) circle(r=3/2-laserOffset);
 }
 
