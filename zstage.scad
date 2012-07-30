@@ -13,7 +13,7 @@ module zBasePlate() {
 		translate([0,-55]) mirrored([-30,0]) woodConnector3();
 		translate([0,5]) mirrored([53,30]) rotate(90) woodConnector3(8);
 
-		translate([0,-43]) mirrored([53+6.5,0]) circle(r=9/2);
+		translate([0,-43]) mirrored([53+6.5,0]) circle(r=12/2);
 		
 		translate([0,-50]) mirrored([53,0]) square([3,30],center=true);
 	}
@@ -46,13 +46,12 @@ module zSidePlate()
 			translate([15,-30/2]) square([100,6],center=true);
 			translate([5,-30/2+3/2]) mirrored([30,0]) woodConnector2(8);
 			translate([-55,0]) rotate(90) woodConnector3(8);
-			translate([-43, 0]) {
-				square([10-laserOffset*2,24-laserOffset*2],center=true);
-				translate([0,-1]) square([10-laserOffset*2,24-laserOffset*2],center=true);
-				translate([ 8, 8]) square([1.50,5],center=true);
-				translate([-8, 8]) square([1.50,5],center=true);
-				translate([ 8,-8]) square([1.50,5],center=true);
-				translate([-8,-8]) square([1.50,5],center=true);
+			translate([-43, 0.5]) {
+				square([12-laserOffset*2,25-laserOffset*2],center=true);
+				translate([ 8.5, 8]) square([1.50,5],center=true);
+				translate([-8.5, 8]) square([1.50,5],center=true);
+				translate([ 8.5,-8]) square([1.50,5],center=true);
+				translate([-8.5,-8]) square([1.50,5],center=true);
 			}
 		}
 		translate([5,-30/2+3/2]) mirrored([30,0]) woodConnector1(8);
@@ -90,9 +89,9 @@ module zStage() {
 		translate([ 53,0,0]) rotate([90,0,90]) wood(h=3) zSidePlate();
 		translate([-53,0,0]) rotate([90,0,90]) wood(h=3) zSidePlate();
 	
-		translate([0,-43,15]) mirrored([53+6.5,0]) {
+		translate([0,-43,15.5]) mirrored([53+6.5,0]) {
 			bearingLM8UU();
-			%translate([0,0,-15-3-zStagePos]) cylinder(r=8/2,h=zMoveMax+30+10+3);
+			%translate([0,0,-15.5-3-zStagePos]) cylinder(r=8/2,h=zMoveMax+25+7+3+3);
 		}
 	}
 	translate([0,-48.5,zMoveMax+30+3]) wood(h=3) zGuideHolder();

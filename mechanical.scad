@@ -188,8 +188,8 @@ module bearing626()
 
 module bearingLM8UU()
 {
-	% linear_extrude(height=24,center=true) difference() {
-		circle(r=15/2);
+	% linear_extrude(height=25,center=true) difference() {
+		circle(r=16/2);
 		circle(r=8/2);
 	}
 }

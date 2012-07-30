@@ -31,7 +31,7 @@ module pulley5mm()
 }
 module pulley6mmDual()
 {
-	translate([0,0,-12]) import("pulleyAxes5mmDualBelt.stl");
+	translate([0,0,-12]) import("pulleyAxes6mmDualBelt.stl");
 }
 
 module bushing(h=20)
