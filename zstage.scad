@@ -81,6 +81,34 @@ module zGuideHolder() {
 	}
 }
 
+module zScrewAssembly() {
+	%cylinder(r=6/3,h=100);
+	translate([  0,0,8]) render() difference() {
+		gear(number_of_teeth=9, circular_pitch=500, gear_thickness = 8, rim_thickness = 8, hub_thickness = 8);
+		translate([0,0,-1]) cylinder(r=12/2,h=10,$fn=6);
+	}
+	translate([-25,0,8]) union() {
+		render() gear(number_of_teeth=9, circular_pitch=500, gear_thickness = 8, rim_thickness = 8, hub_thickness = 8);
+		render() translate([0,0,-8]) difference() {
+			import("pulleyAxes5mm.stl");
+			translate([0,0,18]) cube([20,20,20],center=true);
+		}
+	}
+	translate([0,0,16]) nutM6();
+	
+	difference() {
+		translate([-14,0,9]) cube([56,36,18],center=true);
+		translate([  0,0,6]) cylinder(r=16,h=13);
+		translate([-25,0,6]) cylinder(r=16,h=13);
+		translate([-25,0,23]) cylinder(r=15,h=11);
+		translate([  0,0,-1]) cylinder(r=14/2,h=30);
+		translate([-25,0,-1]) cylinder(r=22/2,h=30);
+		translate([-25,0,-1]) mirrored([13,13]) cylinder(r=4/2,h=30);
+	}
+	
+	translate([-25,0,18	]) rotate([0,180,0]) NEMA14();
+}
+
 module zStage() {
 	translate([0,0,zStagePos]) {
 		translate([0,0,6]) color([0.8,0.8,0.8,0.5]) linear_extrude(height=6) printerBed();
@@ -95,4 +123,6 @@ module zStage() {
 		}
 	}
 	translate([0,-48.5,zMoveMax+30+3]) wood(h=3) zGuideHolder();
+	
+	translate([-20,-77,0]) zScrewAssembly();
 }

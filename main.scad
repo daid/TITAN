@@ -17,16 +17,16 @@ assembly();
 module assembly() {
 	xyStage();
 
-	translate([40,-69,-115]) rotate([0,90,0]) {
-		NEMA14();//X motor
+	translate([40,-69,-110]) rotate([0,90,0]) rotate([0,0,-90]) {
+		motorMount();//X motor
 		translate([0,0,15]) pulley5mm();
 	}
-	translate([-69,40,-115]) rotate([-90,0,0]) {
-		NEMA14();//Y motor
+	translate([-69,40,-110]) rotate([-90,0,0]) {
+		motorMount();//Y motor
 		translate([0,0,15]) pulley5mm();
 	}
-	translate([-20,-69,-115]) rotate([0,90,0]) {
-		NEMA14();//Z motor
+*	translate([-20,-69,-110]) rotate([0,90,0]) rotate([0,0,-90]){
+		motorMount();//Z motor
 		translate([0,0,3]) rotate_extrude() {
 			difference() {
 				union() {
@@ -65,11 +65,14 @@ module wood3mm() {
 	translate([200,-260]) zBackPlate();
 	translate([20,0]) headBottomPlate();
 	translate([-20,0]) headBottomPlate();
+	translate([-20,-30]) bearingPlate();
 }
 
+include<mcad/involute_gears.scad>
 include<util.scad>
 include<mechanical.scad>
 include<extrusionHead.scad>
 include<case.scad>
 include<xystage.scad>
 include<zstage.scad>
+include<motormount.scad>

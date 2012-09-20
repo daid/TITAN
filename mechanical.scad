@@ -194,6 +194,15 @@ module bearingLM8UU()
 	}
 }
 
+module nutM6()
+{
+	%linear_extrude(height=6) difference()
+	{
+		circle(r=11.5/2, $fn=6);
+		circle(r=5/2);
+	}
+}
+
 /**************************************************************/
 /* Limits, to show max size of the machine during development */
 /**************************************************************/
