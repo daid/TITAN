@@ -82,21 +82,25 @@ module zGuideHolder() {
 }
 
 module zScrewAssembly() {
-	%cylinder(r=6/3,h=100);
-	translate([  0,0,8]) render() difference() {
-		gear(number_of_teeth=9, circular_pitch=500, gear_thickness = 8, rim_thickness = 8, hub_thickness = 8);
-		translate([0,0,-1]) cylinder(r=12/2,h=10,$fn=6);
-	}
-	translate([-25,0,8]) union() {
-		render() gear(number_of_teeth=9, circular_pitch=500, gear_thickness = 8, rim_thickness = 8, hub_thickness = 8);
-		render() translate([0,0,-8]) difference() {
-			import("pulleyAxes5mm.stl");
-			translate([0,0,18]) cube([20,20,20],center=true);
-		}
-	}
+	//M6 threaded rod
+	threadedRod(6,100);
 	translate([0,0,16]) nutM6();
 	
-	difference() {
+	if (displayPrinted) {
+		translate([  0,0,8]) render() difference() {
+			gear(number_of_teeth=9, circular_pitch=500, gear_thickness = 8, rim_thickness = 8, hub_thickness = 8);
+			translate([0,0,-1]) cylinder(r=12/2,h=10,$fn=6);
+		}
+		translate([-25,0,8]) union() {
+			render() gear(number_of_teeth=9, circular_pitch=500, gear_thickness = 8, rim_thickness = 8, hub_thickness = 8);
+			render() translate([0,0,-8]) difference() {
+				import("pulleyAxes5mm.stl");
+				translate([0,0,18]) cube([20,20,20],center=true);
+			}
+		}
+	}
+	
+	if (displayPrinted) difference() {
 		translate([-14,0,9]) cube([56,36,18],center=true);
 		translate([  0,0,6]) cylinder(r=16,h=13);
 		translate([-25,0,6]) cylinder(r=16,h=13);
@@ -112,14 +116,14 @@ module zScrewAssembly() {
 module zStage() {
 	translate([0,0,zStagePos]) {
 		translate([0,0,6]) color([0.8,0.8,0.8,0.5]) linear_extrude(height=6) printerBed();
-		%translate([0,0,1.5]) wood(h=3) zBasePlate();
+		translate([0,0,1.5]) wood(h=3) zBasePlate();
 		translate([0,-55,0]) rotate([90,0,0]) wood(h=3) zBackPlate();
 		translate([ 53,0,0]) rotate([90,0,90]) wood(h=3) zSidePlate();
 		translate([-53,0,0]) rotate([90,0,90]) wood(h=3) zSidePlate();
 	
 		translate([0,-43,15.5]) mirrored([53+6.5,0]) {
 			bearingLM8UU();
-			%translate([0,0,-15.5-3-zStagePos]) cylinder(r=8/2,h=zMoveMax+25+7+3+3);
+			translate([0,0,-15.5-3-zStagePos]) smoothRod(d=8,h=zMoveMax+25+7+3+3,center=false);
 		}
 	}
 	translate([0,-48.5,zMoveMax+30+3]) wood(h=3) zGuideHolder();

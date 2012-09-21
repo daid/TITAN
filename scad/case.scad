@@ -96,8 +96,8 @@ module bearingPlate() {
 }
 
 module case() {
-//	translate([0, (90-caseThickness/2),-50]) rotate([0,90,90]) wood(h=caseThickness) caseFront();
-%	translate([0,-(90-caseThickness/2),-50]) rotate([0,90,90]) wood(h=caseThickness) caseBack();
+	translate([0, (90-caseThickness/2),-50]) rotate([0,90,90]) wood(h=caseThickness) caseFront();
+	translate([0,-(90-caseThickness/2),-50]) rotate([0,90,90]) wood(h=caseThickness) caseBack();
 	translate([ (90-caseThickness/2),0,-50]) rotate([0,90,0]) wood(h=caseThickness) caseSide();
 	translate([-(90-caseThickness/2),0,-50]) rotate([0,90,0]) wood(h=caseThickness) caseSide();
 	translate([0,0,-50-85]) wood(h=caseThickness) caseBottom();

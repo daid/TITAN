@@ -2,7 +2,7 @@ module sliderBlock()
 {
 	rotate([0,90,0]) bushing();
 	
-	render() difference() {
+	if (displayPrinted) render() difference() {
 		rotate([0,90,0]) linear_extrude(height=20,center=true,convexity=2) {
 			difference() {
 				hull() {
@@ -23,21 +23,21 @@ module sliderBlock()
 
 module pulley6mm()
 {
-	translate([0,0,-12]) import("pulleyAxes6mm.stl");
+	if (displayPrinted) translate([0,0,-12]) import("pulleyAxes6mm.stl");
 }
 module pulley5mm()
 {
-	translate([0,0,-12]) import("pulleyAxes5mm.stl");
+	if (displayPrinted) translate([0,0,-12]) import("pulleyAxes5mm.stl");
 }
 module pulley6mmDual()
 {
-	translate([0,0,-12]) import("pulleyAxes6mmDualBelt.stl");
+	if (displayPrinted) translate([0,0,-12]) import("pulleyAxes6mmDualBelt.stl");
 }
 
 module bushing(h=20)
 {
 	$fs=0.1;
-	render() difference() {
+	if (displayPrinted) render() difference() {
 		linear_extrude(height=h, twist=360/6, center=true) {
 			for(i=[0:5]) {
 				rotate(i*360/6) translate([0,3+1.0]) circle(r=1.0);
@@ -54,7 +54,7 @@ module bushing(h=20)
 }
 
 module beltClamp(h=12,w=17) {
-	difference() {
+	if (displayPrinted) difference() {
 		linear_extrude(height=h,convexity=2) difference() {
 			square([w,12],center=true);
 		}
@@ -66,21 +66,21 @@ module beltClamp(h=12,w=17) {
 }
 
 module xyStage() {
-	% translate([headPosX,0,17.5]) rotate([90,0,0]) cylinder(r=3,h=150,center=true);
-	% translate([0,headPosY, 2.5]) rotate([0,90,0]) cylinder(r=3,h=150,center=true);
-	% translate([ 0, 70, 0]) rotate([ 0,90,0]) cylinder(r=6/2,h=180,center=true);
-	% translate([ 0,-70, 0]) rotate([ 0,90,0]) cylinder(r=6/2,h=180,center=true);
-	% translate([ 70, 0,20]) rotate([90,90,0]) cylinder(r=6/2,h=180,center=true);
-	% translate([-70, 0,20]) rotate([90,90,0]) cylinder(r=6/2,h=180,center=true);
+	translate([headPosX,0,17.5]) rotate([90,0,0]) smoothRod(6, 150);
+	translate([0,headPosY, 2.5]) rotate([0,90,0]) smoothRod(6,150);
+	translate([ 0, 70, 0]) rotate([ 0,90,0]) smoothRod(6,180);
+	translate([ 0,-70, 0]) rotate([ 0,90,0]) smoothRod(6,180);
+	translate([ 70, 0,20]) rotate([90,90,0]) smoothRod(6,180);
+	translate([-70, 0,20]) rotate([90,90,0]) smoothRod(6,180);
 
-	% translate([-70, 90,20]) rotate([90,90,0]) bearing626();
-	% translate([-90, 70, 0]) rotate([0,90,0]) bearing626();
-	% translate([ 70, 90,20]) rotate([90,90,0]) bearing626();
-	% translate([ 84, 70, 0]) rotate([0,90,0]) bearing626();
-	% translate([ 70,-84,20]) rotate([90,90,0]) bearing626();
-	% translate([ 84,-70, 0]) rotate([0,90,0]) bearing626();
-	% translate([-70,-84,20]) rotate([90,90,0]) bearing626();
-	% translate([-90,-70, 0]) rotate([0,90,0]) bearing626();
+	translate([-70, 90,20]) rotate([90,90,0]) bearing626();
+	translate([-90, 70, 0]) rotate([0,90,0]) bearing626();
+	translate([ 70, 90,20]) rotate([90,90,0]) bearing626();
+	translate([ 84, 70, 0]) rotate([0,90,0]) bearing626();
+	translate([ 70,-84,20]) rotate([90,90,0]) bearing626();
+	translate([ 84,-70, 0]) rotate([0,90,0]) bearing626();
+	translate([-70,-84,20]) rotate([90,90,0]) bearing626();
+	translate([-90,-70, 0]) rotate([0,90,0]) bearing626();
 	translate([ 70, 70, 0]) rotate([0,-90,0]) pulley6mm();
 	translate([ 70, 70,20]) rotate([90,0,0]) pulley6mm();
 	translate([-70, 70, 0]) rotate([0,90,0]) pulley6mm();

@@ -18,16 +18,21 @@
  */
 $fs = 0.4; $fa = 5;
 
-//pulley();
-
-//pulley(motor_shaft=5);
-
-//*
-pulley();
-translate([0,0,17.5]) difference() { cylinder(r=15/2+1.5,h=4); translate([0,0,-1]) cylinder(r=6.3/2,h=6); }
-translate([0,0,17.5+1.5+4]) pulley(pulley_b_ht=0);
-translate([0,0,17.5+1.5+4+8]) rotate([180,0,0]) pulley(pulley_b_ht=0);
-//*/
+type = 0;
+if (type == 0) {
+	pulley();
+}
+else if (type == 1)
+{
+	pulley(motor_shaft=5);
+}
+else
+{
+	pulley();
+	translate([0,0,17.5]) difference() { cylinder(r=15/2+1.5,h=4); translate([0,0,-1]) cylinder(r=6.3/2,h=6); }
+	translate([0,0,17.5+1.5+4]) pulley(pulley_b_ht=0);
+	translate([0,0,17.5+1.5+4+8]) rotate([180,0,0]) pulley(pulley_b_ht=0);
+}
 
 
 // tuneable constants
