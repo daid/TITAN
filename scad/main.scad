@@ -1,4 +1,4 @@
-$fs=0.4; $fa=5;
+//$fs=0.4; $fa=5;
 explode = 0.0;
 headPosMin = -45; headPosMax = 35; zMoveMax = 70;
 headPosX = headPosMin + (headPosMax - headPosMin) * 0.0;
@@ -20,7 +20,7 @@ rotate([0,0,180]) assembly();
 //wood3mm();
 
 module assembly() {
-	xyStage();
+//	xyStage();
 
 	translate([40,-69,-110]) rotate([0,90,0]) rotate([0,0,-90]) {
 		motorMount();//X motor
@@ -29,19 +29,6 @@ module assembly() {
 	translate([-69,40,-110]) rotate([-90,0,0]) {
 		motorMount();//Y motor
 		translate([0,0,15]) pulley5mm();
-	}
-*	translate([-20,-69,-110]) rotate([0,90,0]) rotate([0,0,-90]){
-		motorMount();//Z motor
-		translate([0,0,3]) rotate_extrude() {
-			difference() {
-				union() {
-					translate([5,4]) roundedSquare([10,8],r=1);
-					translate([0,1]) square([5,16]);
-					translate([5,17]) roundedSquare([10,4],r=1);
-				}
-				square([5.2/2,20]);
-			}
-		}
 	}
 	//translate([70,-65,-100]) rotate([0,90,0]) NEMA17(35);//Extruder motor
 
