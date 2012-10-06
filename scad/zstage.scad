@@ -26,6 +26,7 @@ module zBackPlate() {
 			translate([0,-30/2]) square([114,6],center=true);
 			translate([0,-30/2+3/2]) mirrored([30,0]) woodConnector2();
 			mirrored([53,0]) rotate(90) woodConnector2(8);
+			translate([-19,10]) mirrored([7,0]) circle(r=3/2);
 		}
 		mirrored([53,0]) rotate(90) woodConnector1(8);
 		translate([0,-30/2+3/2]) mirrored([30,0]) woodConnector1();
@@ -58,38 +59,71 @@ module zSidePlate()
 	}
 }
 
+module zGuideHolderPlate() {
+	difference() {
+		roundedSquare([20,35], r=6);
+		translate([0, 12]) circle(r=3/2-laserOffset);
+		translate([0,-12]) circle(r=3/2-laserOffset);
+	}
+}
+
 module zGuideHolder() {
 	difference() {
 		union() {
-			mirrored([53+6.5,0]) difference() {
+			translate([0,5.5]) mirrored([53+6.5,0]) difference() {
 				roundedSquare([20,35], r=6);
-				translate([0,5.5]) circle(r=8/2+laserOffset);
+				circle(r=8/2-laserOffset);
 			}
-			translate([0,-20]) square([158,30],center=true);
-			translate([-(headPosMin+hotendDistance+(headPosMax-headPosMin)/2),-31.5]) {
-				square([180-caseThickness*2,30],center=true);
-				mirrored([65,0]) translate([0,-15-caseThickness/2]) woodConnector1();
-				mirrored([90-caseThickness/2,0]) rotate(90) woodConnector1(8);
+			translate([-(headPosMin+hotendDistance+(headPosMax-headPosMin)/2),-25.75]) {
+				square([180-caseThickness*2,41.5],center=true);
+				translate([-14,0]) mirrored([50,0]) translate([0,-41.5/2-caseThickness/2]) woodConnector1();
+				mirrored([90-caseThickness/2,0]) rotate(90) woodConnector1(10);
 			}
 		}
-		translate([-(headPosMin+hotendDistance+(headPosMax-headPosMin)/2),-31.5])
+		translate([-(headPosMin+hotendDistance+(headPosMax-headPosMin)/2),-25.75])
 		{
-			mirrored([65,0]) translate([0,-15-caseThickness/2]) woodConnector2();
+			translate([-14,0]) mirrored([50,0]) translate([0,-41.5/2-caseThickness/2]) woodConnector2();
 			mirrored([90-caseThickness/2,0]) rotate(90) woodConnector2(8);
 		}
-		translate([45,-30]) roundedSquare([15,25],r=2);
+		translate([47,-30]) roundedSquare([25,25],r=2);
+		translate([0,5.5]) mirrored([53+6.5,12]) {
+			circle(r=3/2-laserOffset);
+			circle(r=3/2-laserOffset);
+		}
+	}
+}
+
+module zStagePlatformGuide() {
+	nutM6();
+	render() difference() {
+		linear_extrude(height=10) difference() {
+			hull() {
+				roundedSquare([13,20]);
+				translate([6,15.5]) roundedSquare([25,10]);
+			}
+			circle(r=6/2);
+		}
+		translate([0,0,-1]) cylinder(r=12/2, h=8, $fn=6);
+		translate([6,23,5]) mirrored([7,0]) {
+			rotate([90,0,0]) cylinder(r=3.5/2,h=16);
+			translate([0,-8,0]) {
+				rotate([90,0,0]) cylinder(r=6.5/2,h=4,$fn=6,center=true);
+				translate([0,0,5]) cube([6.5,4,10],center=true);
+			}
+		}
 	}
 }
 
 module zScrewAssembly() {
 	//M6 threaded rod
 	threadedRod(6,100);
-	translate([0,0,16]) nutM6();
+	translate([0,0,10]) nutM6();
+	translate([0,0,2]) nutM6();
 	
 	if (displayPrinted) {
 		translate([  0,0,8]) render() difference() {
 			gear(number_of_teeth=9, circular_pitch=500, gear_thickness = 8, rim_thickness = 8, hub_thickness = 8);
-			translate([0,0,-1]) cylinder(r=12/2,h=10,$fn=6);
+			translate([0,0,2]) cylinder(r=12/2,h=8,$fn=6);
 		}
 		translate([-25,0,8]) union() {
 			render() gear(number_of_teeth=9, circular_pitch=500, gear_thickness = 8, rim_thickness = 8, hub_thickness = 8);
@@ -110,6 +144,8 @@ module zScrewAssembly() {
 		translate([-25,0,-1]) mirrored([13,13]) cylinder(r=4/2,h=30);
 	}
 	
+	translate([0,0,20+zStagePos]) zStagePlatformGuide();
+	
 	translate([-25,0,18	]) rotate([0,180,0]) NEMA14();
 }
 
@@ -124,9 +160,10 @@ module zStage() {
 		translate([0,-43,15.5]) mirrored([53+6.5,0]) {
 			bearingLM8UU();
 			translate([0,0,-15.5-3-zStagePos]) smoothRod(d=8,h=zMoveMax+25+7+3+3,center=false);
+			translate([0,0,zMoveMax+20-zStagePos]) wood(h=3) zGuideHolderPlate();
 		}
 	}
 	translate([0,-48.5,zMoveMax+30+3]) wood(h=3) zGuideHolder();
 	
-	translate([-20,-77,0]) zScrewAssembly();
+	translate([-25,-77,0]) zScrewAssembly();
 }

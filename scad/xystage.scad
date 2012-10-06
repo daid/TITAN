@@ -53,15 +53,31 @@ module bushing(h=20)
 	}
 }
 
-module beltClamp(h=12,w=17) {
+module beltClamp(h=9,w=16) {
 	if (displayPrinted) difference() {
 		linear_extrude(height=h,convexity=2) difference() {
 			square([w,12],center=true);
 		}
-		translate([-w/2+5,0,25]) rotate([0,90,0])
+		translate([-w/2+5,0,25.7]) rotate([0,90,0])
 			linear_extrude(height=w,convexity=2) T5Belt(length=35);
 		translate([-w/2+3,0,h/2]) rotate([90,0,0]) cylinder(r=3.5/2,h=20,center=true);
 		translate([ w/2-3,0,h/2]) rotate([90,0,0]) cylinder(r=3.0/2,h=20,center=true);
+	}
+}
+
+module T5pulleyBelt(length=140,clampsInside=false)
+{
+	if (displayMechanics) {
+		color([0.4,0.4,0.4]) translate([0, 7,0]) rotate([180,0,0]) linear_extrude(height=5,center=true) T5Belt(length=length);
+		color([0.4,0.4,0.4]) translate([0,-7,0]) linear_extrude(height=5,center=true) T5Belt(length=length);
+	}
+	if (clampsInside)
+	{
+		translate([length/2-7, 3,0]) rotate([90,90,0]) beltClamp();
+		translate([length/2+7, 3,0]) rotate([90,-90,0]) beltClamp();
+	}else{
+		translate([length/2-7,-8,0]) rotate([90,90,0]) beltClamp();
+		translate([length/2+7,-8,0]) rotate([90,-90,0]) beltClamp();
 	}
 }
 
@@ -90,15 +106,20 @@ module xyStage() {
 	translate([-70,-70, 0]) rotate([0,90,0]) pulley6mm();
 	translate([-70,-70,20]) rotate([-90,0,0]) pulley6mm();
 
+	//X/Y square belts
+	translate([ 70, 70, 0]) rotate([90,0,-90]) T5pulleyBelt();
+	translate([ 70, 70,20]) rotate([-90,0,180]) T5pulleyBelt();
+	translate([-70,-70, 0]) rotate([90,0,90]) T5pulleyBelt();
+	translate([-70,-70,20]) rotate([-90,0,0]) T5pulleyBelt();
+	//X/Y belts to motors
+	translate([ 55,-70, 0]) rotate([90,90,90]) T5pulleyBelt(110,true);
+	translate([-70, 55,20]) rotate([90,90,0]) T5pulleyBelt(130,true);
+
 	translate([headPosX,70,0]) sliderBlock();
 	translate([headPosX,-70,0]) rotate([0,0,180]) sliderBlock();
-	translate([-headPosX-8,70,27]) rotate([0,0,-90]) beltClamp();
-	translate([-headPosX+8,70,27]) rotate([0,0, 90]) beltClamp();
 
 	translate([ 70,headPosY,20]) rotate([0,180,-90]) sliderBlock();
 	translate([-70,headPosY,20]) rotate([0,180, 90]) sliderBlock();
-	translate([ 70,-headPosY-8,-16]) rotate([0,0,  0]) beltClamp();
-	translate([ 70,-headPosY+8,-16]) rotate([0,0,180]) beltClamp();
 
 	translate([headPosX,headPosY,2.5]) headDesignPrinted();
 }

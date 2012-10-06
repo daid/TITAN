@@ -53,7 +53,7 @@ module woodConnector1(d=15) {
 }
 module woodConnector2() {
 	if (enableWoodScrewconnectors) {
-		square([2.7,26],center=true);
+		square([2.7,30],center=true);
 		translate([0,-10.5]) square([5.5,2.2],center=true);
 		translate([0, 10.5]) square([5.5,2.2],center=true);
 	}
