@@ -94,16 +94,16 @@ module zGuideHolder() {
 }
 
 module zStagePlatformGuide() {
-	nutM6();
+	translate([0,0,2]) nutM6();
 	render() difference() {
 		linear_extrude(height=10) difference() {
 			hull() {
 				roundedSquare([13,20]);
 				translate([6,15.5]) roundedSquare([25,10]);
 			}
-			circle(r=6/2);
+			circle(r=6.5/2);
 		}
-		translate([0,0,-1]) cylinder(r=12/2, h=8, $fn=6);
+		translate([0,0,2]) cylinder(r=12/2, h=8, $fn=6);
 		translate([6,23,5]) mirrored([7,0]) {
 			rotate([90,0,0]) cylinder(r=3.5/2,h=16);
 			translate([0,-8,0]) {
@@ -116,17 +116,19 @@ module zStagePlatformGuide() {
 
 module zScrewAssembly() {
 	//M6 threaded rod
-	threadedRod(6,100);
-	translate([0,0,10]) nutM6();
-	translate([0,0,2]) nutM6();
+	translate([0,0,-3]) threadedRod(6,100);
+	translate([0,0,16]) nutM6();
+	translate([0,0,10]) bearing626();
+	translate([0,0, 1]) nutM6();
 	
 	if (displayPrinted) {
-		translate([  0,0,8]) render() difference() {
-			gear(number_of_teeth=9, circular_pitch=500, gear_thickness = 8, rim_thickness = 8, hub_thickness = 8);
-			translate([0,0,2]) cylinder(r=12/2,h=8,$fn=6);
+		translate([  0,0,1]) render() difference() {
+			gear(number_of_teeth=9, circular_pitch=490, gear_thickness = 7, rim_thickness = 7, hub_thickness = 7);
+			translate([0,0,-2]) cylinder(r=12/2,h=8,$fn=6);
+			translate([0,0,-1]) cylinder(r=6.5/2,h=10);
 		}
-		translate([-25,0,8]) union() {
-			render() gear(number_of_teeth=9, circular_pitch=500, gear_thickness = 8, rim_thickness = 8, hub_thickness = 8);
+		translate([-25,0,8]) rotate([180,0,0]) union() {
+			render() gear(number_of_teeth=9, circular_pitch=490, gear_thickness = 7, rim_thickness = 7, hub_thickness = 7);
 			render() translate([0,0,-8]) difference() {
 				import("pulleyAxes5mm.stl");
 				translate([0,0,18]) cube([20,20,20],center=true);
@@ -136,11 +138,13 @@ module zScrewAssembly() {
 	
 	if (displayPrinted) difference() {
 		translate([-14,0,9]) cube([56,36,18],center=true);
-		translate([  0,0,6]) cylinder(r=16,h=13);
-		translate([-25,0,6]) cylinder(r=16,h=13);
-		translate([-25,0,23]) cylinder(r=15,h=11);
+		translate([  0,0,-1]) cylinder(r=16,h=11);
 		translate([  0,0,-1]) cylinder(r=14/2,h=30);
-		translate([-25,0,-1]) cylinder(r=22/2,h=30);
+		translate([  0,0,-1]) cylinder(r=19.5/2,h=17);
+
+		translate([-25,0,-1]) cylinder(r=16,h=13);
+		translate([-25,0,23]) cylinder(r=15,h=11);
+		translate([-25,0,-1]) cylinder(r=24/2,h=30);
 		translate([-25,0,-1]) mirrored([13,13]) cylinder(r=4/2,h=30);
 	}
 	
@@ -151,16 +155,17 @@ module zScrewAssembly() {
 
 module zStage() {
 	translate([0,0,zStagePos]) {
-		translate([0,0,6]) color([0.8,0.8,0.8,0.5]) linear_extrude(height=6) printerBed();
-		translate([0,0,1.5]) wood(h=3) zBasePlate();
-		translate([0,-55,0]) rotate([90,0,0]) wood(h=3) zBackPlate();
-		translate([ 53,0,0]) rotate([90,0,90]) wood(h=3) zSidePlate();
-		translate([-53,0,0]) rotate([90,0,90]) wood(h=3) zSidePlate();
+		translate([0,0,6]) color([1.0,1.0,1.0,1.0]) linear_extrude(height=6) printerBed();
+		translate([0,0,1.5]) wood(h=3,type=1) zBasePlate();
+		translate([0,-55,0]) rotate([90,0,0]) wood(h=3,type=1) zBackPlate();
+		translate([ 53,0,0]) rotate([90,0,90]) wood(h=3,type=1) zSidePlate();
+		translate([-53,0,0]) rotate([90,0,90]) wood(h=3,type=1) zSidePlate();
 	
 		translate([0,-43,15.5]) mirrored([53+6.5,0]) {
 			bearingLM8UU();
 			translate([0,0,-15.5-3-zStagePos]) smoothRod(d=8,h=zMoveMax+25+7+3+3,center=false);
-			translate([0,0,zMoveMax+20-zStagePos]) wood(h=3) zGuideHolderPlate();
+			translate([0,0,zMoveMax+20-zStagePos]) wood(h=3,type=1) zGuideHolderPlate();
+			translate([0,0,-4.5-15.5-zStagePos]) wood(h=3,type=1) zGuideHolderPlate();
 		}
 	}
 	translate([0,-48.5,zMoveMax+30+3]) wood(h=3) zGuideHolder();

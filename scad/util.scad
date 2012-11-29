@@ -1,7 +1,8 @@
 
-module wood(c=1,h=6)
+module wood(c=1,h=6,type=0)
 {
-	if (displayWood) color([0.7,0.5,0.3]) linear_extrude(height=h-0.1,convexity=c,center=true) for (i = [0 : $children-1]) child(i);
+	if (type==0 && (displayWood % 2) == 1) color([0.7,0.5,0.3]) linear_extrude(height=h-0.1,convexity=c,center=true) for (i = [0 : $children-1]) child(i);
+	if (type==1 && (displayWood % 4) - (displayWood % 2) == 2) color([0.6,0.4,0.2]) linear_extrude(height=h-0.1,convexity=c,center=true) for (i = [0 : $children-1]) child(i);
 }
 
 module mirrored(offset=[])

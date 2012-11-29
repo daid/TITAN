@@ -20,7 +20,7 @@ module NEMA17(l=48) {
 }
 module stepper(size=20,length=30,shaftDiameter=4,shaftLength=15,faceplateDiameter=15,screwDistance=16,screwDiameter=2) {
 	//Standard model for NEMA steppers. (Note: Up from NEMA23 the design changes at the screw locations, so only use this up to NEMA17)
-	if (displayMechanics) color([0.8,0.8,0.8]) render() union() {
+	if (displayMechanics) color([0.8,0.8,0.8,0.8]) render() union() {
 		difference() {
 			translate([0,0,-length]) linear_extrude(height=length) minkowski() {
 				square([size*0.8,size*0.8], center=true);
@@ -181,7 +181,7 @@ module fan40mm() {
 
 module bearing626()
 {
-	if (displayMechanics) color([0.8,0.8,0.8]) render() difference()
+	if (displayMechanics) color([0.8,0.8,0.8,0.8]) render() difference()
 	{
 		cylinder(r=19/2,h=6);
 		translate([0,0,-1]) cylinder(r=6/2,h=8);
@@ -190,7 +190,7 @@ module bearing626()
 
 module bearingLM8UU()
 {
-	if (displayMechanics) color([0.8,0.8,0.8]) linear_extrude(height=25,center=true) difference() {
+	if (displayMechanics) color([0.8,0.8,0.8,0.8]) linear_extrude(height=25,center=true) difference() {
 		circle(r=16/2);
 		circle(r=8/2);
 	}
@@ -198,7 +198,7 @@ module bearingLM8UU()
 
 module nutM6()
 {
-	if (displayMechanics) color([0.8,0.8,0.8]) linear_extrude(height=6) difference()
+	if (displayMechanics) color([0.8,0.8,0.8,0.8]) linear_extrude(height=6) difference()
 	{
 		circle(r=11.5/2, $fn=6);
 		circle(r=5/2);
@@ -207,11 +207,11 @@ module nutM6()
 
 module smoothRod(d=6,h=150,center=true)
 {
-	if (displayMechanics) color([0.6,0.6,0.6]) cylinder(r=d/2,h=h,center=center);
+	if (displayMechanics) color([0.6,0.6,0.6,0.8]) cylinder(r=d/2,h=h,center=center);
 }
 module threadedRod(d=6,h=150,center=false)
 {
-	if (displayMechanics) color([0.6,0.6,0.6]) cylinder(r=d/2,h=h,center=center);
+	if (displayMechanics) color([0.6,0.6,0.6,0.8]) cylinder(r=d/2,h=h,center=center);
 }
 
 /**************************************************************/
