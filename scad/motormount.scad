@@ -2,7 +2,7 @@
 module motorMount()
 {
 	NEMA14();
-	if (displayPrinted) {
+	if (bitIsSet(displayPrinted, 0)) {
 		linear_extrude(height=5) difference() {
 			square([36,36], center=true);
 			circle(r=12);

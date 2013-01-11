@@ -1,43 +1,45 @@
 module sliderBlock()
 {
-	rotate([0,90,0]) bushing();
-	
-	if (displayPrinted) render() difference() {
-		rotate([0,90,0]) linear_extrude(height=20,center=true,convexity=2) {
-			difference() {
-				hull() {
-					circle(r=8);
-					translate([-19,0]) roundedSquare([8,16],r=2);
+	if (bitIsSet(displayPrinted, 1)) union() {
+		rotate([0,90,0]) bushing();
+		
+		render() difference() {
+			rotate([0,90,0]) linear_extrude(height=20,center=true,convexity=2) {
+				difference() {
+					hull() {
+						circle(r=8);
+						translate([-19,0]) roundedSquare([8,16],r=2);
+					}
+					circle(r=6);
+					translate([-15,0]) square([4,6],center=true);
 				}
-				circle(r=6);
-				translate([-15,0]) square([4,6],center=true);
 			}
+			translate([0,0,17.5]) rotate([90,0,0]) cylinder(r=6.5/2,h=20,center=true);
+			translate([-5,-10,16.5]) cube([20,20,0.5]);
+			translate([6, 4,7]) cylinder(r=3.5/2,h=25);
+			translate([6,-4,7]) cylinder(r=3.5/2,h=25);
+			translate([3,-15,8]) cube([7,30,3]);
 		}
-		translate([0,0,17.5]) rotate([90,0,0]) cylinder(r=6.5/2,h=20,center=true);
-		translate([-5,-10,16.5]) cube([20,20,0.5]);
-		translate([6, 4,7]) cylinder(r=3.5/2,h=25);
-		translate([6,-4,7]) cylinder(r=3.5/2,h=25);
-		translate([3,-15,8]) cube([7,30,3]);
 	}
 }
 
 module pulley6mm()
 {
-	if (displayPrinted) translate([0,0,-12]) import("pulleyAxes6mm.stl");
+	if (bitIsSet(displayPrinted, 2)) translate([0,0,-12]) import("pulleyAxes6mm.stl");
 }
 module pulley5mm()
 {
-	if (displayPrinted) translate([0,0,-12]) import("pulleyAxes5mm.stl");
+	if (bitIsSet(displayPrinted, 2)) translate([0,0,-12]) import("pulleyAxes5mm.stl");
 }
 module pulley6mmDual()
 {
-	if (displayPrinted) translate([0,0,-12]) import("pulleyAxes6mmDualBelt.stl");
+	if (bitIsSet(displayPrinted, 2)) translate([0,0,-12]) import("pulleyAxes6mmDualBelt.stl");
 }
 
 module bushing(h=20)
 {
 	$fs=0.1;
-	if (displayPrinted) render() difference() {
+	render() difference() {
 		linear_extrude(height=h, twist=360/6, center=true) {
 			for(i=[0:5]) {
 				rotate(i*360/6) translate([0,3+1.0]) circle(r=1.0);
@@ -54,7 +56,7 @@ module bushing(h=20)
 }
 
 module beltClamp(h=9,w=16) {
-	if (displayPrinted) difference() {
+	if (bitIsSet(displayPrinted, 4)) difference() {
 		linear_extrude(height=h,convexity=2) difference() {
 			square([w,12],center=true);
 		}
@@ -67,7 +69,7 @@ module beltClamp(h=9,w=16) {
 
 module T5pulleyBelt(length=140,clampsInside=false)
 {
-	if (displayMechanics) {
+	if (bitIsSet(displayMechanics, 3)) {
 		color([0.4,0.4,0.4]) translate([0, 7,0]) rotate([180,0,0]) linear_extrude(height=5,center=true) T5Belt(length=length);
 		color([0.4,0.4,0.4]) translate([0,-7,0]) linear_extrude(height=5,center=true) T5Belt(length=length);
 	}

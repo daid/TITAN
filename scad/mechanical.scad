@@ -20,7 +20,7 @@ module NEMA17(l=48) {
 }
 module stepper(size=20,length=30,shaftDiameter=4,shaftLength=15,faceplateDiameter=15,screwDistance=16,screwDiameter=2) {
 	//Standard model for NEMA steppers. (Note: Up from NEMA23 the design changes at the screw locations, so only use this up to NEMA17)
-	if (displayMechanics) color([0.8,0.8,0.8,0.8]) render() union() {
+	if (bitIsSet(displayMechanics, 2)) color([0.8,0.8,0.8,0.8]) render() union() {
 		difference() {
 			translate([0,0,-length]) linear_extrude(height=length) minkowski() {
 				square([size*0.8,size*0.8], center=true);
@@ -42,7 +42,7 @@ module stepper(size=20,length=30,shaftDiameter=4,shaftLength=15,faceplateDiamete
 
 //ptfeCoupling found in the V2 version of the Ultimaker hotend
 module ptfeCoupling() {
-	color([0.9,0.9,0.9,0.9]) translate([0,0,1.25]) difference() {
+	if (bitIsSet(displayMechanics, 6)) color([0.9,0.9,0.9,0.9]) translate([0,0,1.25]) difference() {
 		union() {
 			cylinder(r=6/2,h=5);
 			translate([0,0,-1.25]) cylinder(r=11.5/2,h=1.25);
@@ -55,7 +55,7 @@ module ptfeCoupling() {
 
 //Brass connecting tube found in the V1 version of the Ultimaker hotend
 module brassTubeV1() {
-	color([1,0.9,0,0.9]) difference() {
+	if (bitIsSet(displayMechanics, 4)) color([1,0.9,0,0.9]) difference() {
 		translate([0,0,-11]) cylinder(r=4.8/2,h=30);//This length is guessed.
 		translate([0,0,-12]) cylinder(r=3.2/2,h=31);
 	}
@@ -64,7 +64,7 @@ module brassTubeV1() {
 
 //Brass connecting tube found in the V2 version of the Ultimaker hotend
 module brassTubeV2() {
-	color([1,0.9,0,0.9]) difference() {
+	if (bitIsSet(displayMechanics, 4)) color([1,0.9,0,0.9]) difference() {
 		union() {
 			cylinder(r=10/2,h=1);
 			translate([0,0,-11]) cylinder(r=4.8/2,h=11);
@@ -78,7 +78,7 @@ module brassTubeV2() {
 
 //The ultimaker peek insulator (see: http://wiki.ultimaker.com/PEEK_insulator)
 module peekInsulator() {
-	color([1,0.8,0.3,0.9]) render() difference() {
+	if (bitIsSet(displayMechanics, 5)) color([1,0.8,0.3,0.9]) render() difference() {
 		union() {
 			cylinder(r=16.5/2,h=4.2);
 			intersection() {
@@ -94,7 +94,7 @@ module peekInsulator() {
 
 //Ultimaker heater block
 module heaterBlock() {
-	color([0.7,0.7,0.7,0.9]) difference() {
+	if (bitIsSet(displayMechanics, 1)) color([0.7,0.7,0.7,0.9]) difference() {
 		translate([-5,-25.1/2,0]) cube([16,25.1,12.1]);
 		translate([0,0,-1]) cylinder(r=6/2,h=14);	//#M6 thread#
 		translate([7,0,8.3]) rotate([90,0,0]) cylinder(r=6/2,h=30,center=true);
@@ -105,7 +105,7 @@ module heaterBlock() {
 
 //Ultimaker nozzle, found in the V1 hotend
 module nozzleV1() {
-	color([1,0.9,0,0.9]) difference() {
+	if (bitIsSet(displayMechanics, 4)) color([1,0.9,0,0.9]) difference() {
 		union() {
 			cylinder(r=11.5/2,h=4,$fn=6);
 			translate([0,0,-6]) cylinder(r=4.8/2,h=6);
@@ -123,7 +123,7 @@ module nozzleV1() {
 
 //Ultimaker nozzle, found in the V2 hotend
 module nozzleV2() {
-	color([1,0.9,0,0.9]) difference() {
+	if (bitIsSet(displayMechanics, 4)) color([1,0.9,0,0.9]) difference() {
 		union() {
 			cylinder(r=11.5/2,h=4,$fn=6);
 			translate([0,0,-6]) cylinder(r=4.8/2,h=6);
@@ -140,22 +140,22 @@ module nozzleV2() {
 }
 
 module hotEndV1() {
-	if (displayMechanics) rotate([180,0,0]) {
+	rotate([180,0,0]) {
 		translate([0,0,13+4.2]) brassTubeV1();
 		peekInsulator();
 		translate([0,0,13+4.2]) heaterBlock();
 		translate([0,0,13+4.2+12.1]) nozzleV1();
-		rotate([180,0,0]) color([0.7,0.7,0.7,0.2]) cylinder(r=6.5/2,h=100);//Bowden tube
+		if (bitIsSet(displayMechanics, 7)) rotate([180,0,0]) color([0.7,0.7,0.7,0.2]) cylinder(r=6.5/2,h=100);//Bowden tube
 	}
 }
 module hotEndV2() {
-	if (displayMechanics) rotate([180,0,0]) {
+	rotate([180,0,0]) {
 		ptfeCoupling();
 		translate([0,0,0.25+13+4.2]) brassTubeV2();
 		translate([0,0,0.25+13+4.2+3.7+12.1]) nozzleV2();
 		translate([0,0,0.25+13+4.2+3.7]) heaterBlock();
 		translate([0,0,0.25]) peekInsulator();
-		rotate([180,0,0]) color([0.7,0.7,0.7,0.2]) cylinder(r=6.5/2,h=100);//Bowden tube
+		if (bitIsSet(displayMechanics, 7)) rotate([180,0,0]) color([0.7,0.7,0.7,0.2]) cylinder(r=6.5/2,h=100);//Bowden tube
 	}
 }
 
@@ -163,7 +163,7 @@ module hotEndV2() {
 /* Fan */
 /************/
 module fan40mm() {
-	if (displayMechanics) color([0.5,0.5,0.5,0.9]) linear_extrude(height=10) {
+	if (bitIsSet(displayMechanics, 6)) color([0.5,0.5,0.5,0.9]) linear_extrude(height=10) {
 		difference() {
 			roundedSquare([40,40], r=4);
 			translate([ 32/2, 32/2]) circle(r=4/2);
@@ -181,7 +181,7 @@ module fan40mm() {
 
 module bearing626()
 {
-	if (displayMechanics) color([0.8,0.8,0.8,0.8]) render() difference()
+	if (bitIsSet(displayMechanics, 1)) color([0.8,0.8,0.8,0.8]) render() difference()
 	{
 		cylinder(r=19/2,h=6);
 		translate([0,0,-1]) cylinder(r=6/2,h=8);
@@ -190,7 +190,7 @@ module bearing626()
 
 module bearingLM8UU()
 {
-	if (displayMechanics) color([0.8,0.8,0.8,0.8]) linear_extrude(height=25,center=true) difference() {
+	if (bitIsSet(displayMechanics, 1)) color([0.8,0.8,0.8,0.8]) linear_extrude(height=25,center=true) difference() {
 		circle(r=16/2);
 		circle(r=8/2);
 	}
@@ -198,7 +198,7 @@ module bearingLM8UU()
 
 module nutM6()
 {
-	if (displayMechanics) color([0.8,0.8,0.8,0.8]) linear_extrude(height=6) difference()
+	if (bitIsSet(displayMechanics, 1)) color([0.8,0.8,0.8,0.8]) linear_extrude(height=6) difference()
 	{
 		circle(r=11.5/2, $fn=6);
 		circle(r=5/2);
@@ -207,11 +207,20 @@ module nutM6()
 
 module smoothRod(d=6,h=150,center=true)
 {
-	if (displayMechanics) color([0.6,0.6,0.6,0.8]) cylinder(r=d/2,h=h,center=center);
+	if (bitIsSet(displayMechanics, 0)) color([0.6,0.6,0.6,0.8]) cylinder(r=d/2,h=h,center=center);
 }
 module threadedRod(d=6,h=150,center=false)
 {
-	if (displayMechanics) color([0.6,0.6,0.6,0.8]) cylinder(r=d/2,h=h,center=center);
+	if (bitIsSet(displayMechanics, 0)) color([0.6,0.6,0.6,0.8]) cylinder(r=d/2,h=h,center=center);
+}
+
+module hobbedSleve()
+{
+	if (bitIsSet(displayMechanics, 1)) color([0.6,0.6,0.6,0.8]) {
+		cylinder(r=8/2,h=12.5);
+		cylinder(r=9/2,h=7.5);
+		translate([0,0,10]) rotate([90,0,0]) cylinder(r=3/2,h=8);
+	}
 }
 
 /**************************************************************/
@@ -240,4 +249,3 @@ module limits(s = 180, s2=180) {
 	//% translate([s/2,-s/2,-s/2]) cube([420,410,350]);//Prusa Mendel
 	//% translate([s/2,-s/2,-s/2]) cube([11*25.4,11*25.4,11*25.4]);//Printrbot? (need to figure out the outside dimensions)
 }
-
