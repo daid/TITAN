@@ -1,6 +1,6 @@
 
 module printerBed() {
-	difference() {
+	if (bitIsSet(displayMechanics, 6)) difference() {
 		roundedSquare([100,100],r=4);
 		mirrored([45,45]) circle(r=3/2-laserOffset);
 	}
@@ -95,7 +95,7 @@ module zGuideHolder() {
 
 module zStagePlatformGuide() {
 	translate([0,0,2]) nutM6();
-	render() difference() {
+	if (bitIsSet(displayPrinted, 1)) render() difference() {
 		linear_extrude(height=10) difference() {
 			hull() {
 				roundedSquare([13,20]);
@@ -121,14 +121,14 @@ module zScrewAssembly() {
 	translate([0,0,10]) bearing626();
 	translate([0,0, 1]) nutM6();
 	
-	if (displayPrinted) {
+	if (bitIsSet(displayPrinted, 0)) {
 		translate([  0,0,1]) render() difference() {
 			gear(number_of_teeth=9, circular_pitch=490, gear_thickness = 7, rim_thickness = 7, hub_thickness = 7);
 			translate([0,0,-2]) cylinder(r=12/2,h=8,$fn=6);
 			translate([0,0,-1]) cylinder(r=6.5/2,h=10);
 		}
 		translate([-25,0,8]) rotate([180,0,0]) union() {
-			render() gear(number_of_teeth=9, circular_pitch=490, gear_thickness = 7, rim_thickness = 7, hub_thickness = 7);
+			render() gear(number_of_teeth=9, circular_pitch=490, gear_thickness = 6, rim_thickness = 6, hub_thickness = 6);
 			render() translate([0,0,-8]) difference() {
 				import("pulleyAxes5mm.stl");
 				translate([0,0,18]) cube([20,20,20],center=true);
@@ -136,13 +136,13 @@ module zScrewAssembly() {
 		}
 	}
 	
-	if (displayPrinted) difference() {
-		translate([-14,0,9]) cube([56,36,18],center=true);
+	if (bitIsSet(displayPrinted, 1)) difference() {
+		translate([-14,0,9]) cube([57,36,18],center=true);
 		translate([  0,0,-1]) cylinder(r=16,h=11);
 		translate([  0,0,-1]) cylinder(r=14/2,h=30);
 		translate([  0,0,-1]) cylinder(r=19.5/2,h=17);
 
-		translate([-25,0,-1]) cylinder(r=16,h=13);
+		translate([-25,0,-1]) cylinder(r=16,h=23);
 		translate([-25,0,23]) cylinder(r=15,h=11);
 		translate([-25,0,-1]) cylinder(r=24/2,h=30);
 		translate([-25,0,-1]) mirrored([13,13]) cylinder(r=4/2,h=30);
@@ -155,7 +155,7 @@ module zScrewAssembly() {
 
 module zStage() {
 	translate([0,0,zStagePos]) {
-		translate([0,0,6]) color([1.0,1.0,1.0,1.0]) linear_extrude(height=6) printerBed();
+		translate([0,0,6]) color([1.0,1.0,1.0,1.0]) linear_extrude(height=4) printerBed();
 		translate([0,0,1.5]) wood(h=3,type=1) zBasePlate();
 		translate([0,-55,0]) rotate([90,0,0]) wood(h=3,type=1) zBackPlate();
 		translate([ 53,0,0]) rotate([90,0,90]) wood(h=3,type=1) zSidePlate();

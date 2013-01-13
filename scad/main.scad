@@ -15,9 +15,12 @@ displayWood = 255;
 displayPrinted = 255;
 displayMechanics = 255;
 
+//Render type
+render_type = 0; //[0: Full Machine, 1: Lasercut parts, 2: Printed parts]
 
-rotate([0,0,180]) assembly();
-//wood3mm();
+
+if (render_type == 0) rotate([0,0,180]) assembly();
+if (render_type == 1) wood3mm();
 
 module assembly() {
 	xyStage();
@@ -63,7 +66,7 @@ module wood3mm() {
 	translate([-20, 40]) zGuideHolderPlate();
 }
 
-include<mcad/involute_gears.scad>
+include<MCAD/involute_gears.scad>
 include<util.scad>
 include<mechanical.scad>
 include<extrusionHead.scad>
