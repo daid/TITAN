@@ -25,15 +25,15 @@ module sliderBlock()
 
 module pulley6mm()
 {
-	if (bitIsSet(displayPrinted, 2)) translate([0,0,-12]) import("pulleyAxes6mm.stl");
+	if (bitIsSet(displayPrinted, 2)) translate([0,0,-12]) import("../stl/parts/pulleyAxes6mm.stl");
 }
 module pulley5mm()
 {
-	if (bitIsSet(displayPrinted, 2)) translate([0,0,-12]) import("pulleyAxes5mm.stl");
+	if (bitIsSet(displayPrinted, 2)) translate([0,0,-12]) import("../stl/parts/pulleyAxes5mm.stl");
 }
 module pulley6mmDual()
 {
-	if (bitIsSet(displayPrinted, 2)) translate([0,0,-12]) import("pulleyAxes6mmDualBelt.stl");
+	if (bitIsSet(displayPrinted, 2)) translate([0,0,-12]) import("../stl/parts/pulleyAxes6mmDualBelt.stl");
 }
 
 module bushing(h=20)
