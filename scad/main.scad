@@ -3,7 +3,7 @@ explode = 0.0;
 headPosMin = -45; headPosMax = 35; zMoveMax = 70;
 headPosX = headPosMin + (headPosMax - headPosMin) * 0.3;
 headPosY = headPosMin + (headPosMax - headPosMin) * 0.3;
-zStagePos = zMoveMax * 1.05;
+zStagePos = zMoveMax * 0.05;
 laserOffset = 0.1;
 enableWoodScrewconnectors = true;
 hotendDistance = 13;
@@ -33,17 +33,17 @@ module assembly() {
 		motorMount();//Y motor
 		translate([0,0,15]) pulley5mm();
 	}
-	//translate([70,-65,-100]) rotate([0,90,0]) NEMA17(35);//Extruder motor
+	translate([-65.9,-69,-60]) rotate([0,-90,0]) {
+		extruderAssembly();
+	}
 
 	translate([headPosMin+hotendDistance+(headPosMax-headPosMin)/2,
 		headPosMin+hotendDistance+(headPosMax-headPosMin)/2,
 		-50-85+caseThickness/2])
 			zStage();
 
-//	%translate([headPosMin+hotendDistance, headPosMin+hotendDistance,-52-zMoveMax])
-//		cube([headPosMax-headPosMin,headPosMax-headPosMin,zMoveMax]);
-//	translate([0,0,-50]) limits();
-	translate([0,0,-50]) limits(190,190);
+//	translate([0,0,-50]) limits(190,190);
+//	translate([0,0,-50]) limits(200,200);
 
 	case();
 //%	translate([0,0,180]) case();
@@ -53,7 +53,8 @@ module wood3mm() {
 	caseFront();
 	translate([200,   0]) caseBack();
 	translate([  0, 200]) caseSide();
-	translate([200, 200]) caseSide();
+	translate([200, 200]) caseSideRight();
+	translate([200, 200]) extruderClampPlate();
 	translate([  0,-200]) caseBottom();
 	translate([  0,2*200]) rotate(-90) zBasePlate();
 	translate([200,2*200]) zGuideHolder()
@@ -74,3 +75,4 @@ include<case.scad>
 include<xystage.scad>
 include<zstage.scad>
 include<motormount.scad>
+include<extruder.scad>

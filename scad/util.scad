@@ -48,6 +48,26 @@ module roundedSquare(pos=[10,10],r=2) {
 	}
 }
 
+module ring(r1, r2)
+{
+	difference() {
+		circle(r2);
+		circle(r1);
+	}
+}
+
+module arc(r1, r2, angle)
+{
+	s = r2*2.2;
+	render() difference() {
+		ring(r1, r2);
+		rotate(angle/2) square(s);
+		rotate(270-angle/2) square(s);
+		rotate(180) square(s);
+		rotate(90) square(s);
+	}
+}
+
 //The wood connector has 3 parts. The first is unioned to the wood, the 2nd is differenced from the wood. And the last is differenced from the other wooden plate.
 module woodConnector1(d=15) {
 	s = d*2/3;
@@ -94,5 +114,19 @@ module TITAN()
 			polygon([[18,16],[18,0],[22,0],[22,14],[25,14],[25,0],[29,0],[29,16]]);
 		}
 		polygon([[9,10],[12,10],[12,14],[9,14]]);
+	}
+}
+
+module titanGear(teeth=9, height=6, bore_diameter=5) {
+	render() gear(number_of_teeth=teeth, circular_pitch=490, gear_thickness = height, rim_thickness = height, hub_thickness = height, bore_diameter=bore_diameter);
+}
+
+module gearWithHub(teeth=9,height=6) {
+	union() {
+		titanGear(teeth=teeth, height=height);
+		render() translate([0,0,-8]) difference() {
+			translate([0,0,12]) pulley5mm();
+			translate([0,0,18]) cube([20,20,20],center=true);
+		}
 	}
 }

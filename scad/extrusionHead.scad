@@ -5,12 +5,12 @@ module headDesignPrinted() {
 	bushingMinHeight = bushingDiameter + headWallThickness * 2;
 	screwHoleDistance = (bushingMinHeight + headBushingExtend)/2 - (headWallThickness/2);
 	
-	if (bitIsSet(displayPrinted, 3)) {
+	if (bitIsSet(displayPrinted, 3))  {
 		translate([0,headBushingExtend/2,15+1*explode]) rotate([90,0,0]) bushing(h=bushingMinHeight + headBushingExtend);
 		translate([headBushingExtend/2,0,  -1*explode]) rotate([0,90,0]) bushing(h=bushingMinHeight + headBushingExtend);
 	
 		//Center block
-		difference() {
+		render() difference() {
 			translate([headBushingExtend/2,headBushingExtend/2,15/2]) linear_extrude(height=15-0.2,center=true) roundedSquare([bushingMinHeight + headBushingExtend,bushingMinHeight + headBushingExtend],r=3);
 			//Bushing openings
 			translate([0,headBushingExtend/2,15]) rotate([90,0,0]) cylinder(h=bushingMinHeight + headBushingExtend+1,r=bushingDiameter/2,center=true);
@@ -25,7 +25,7 @@ module headDesignPrinted() {
 		}
 
 		//Bottom block
-		translate([0,0,-2*explode]) difference() {
+		translate([0,0,-2*explode]) render() difference() {
 			translate([headBushingExtend/2,headBushingExtend/2,-bushingMinHeight/2]) linear_extrude(height=bushingMinHeight/2) roundedSquare([bushingMinHeight + headBushingExtend,bushingMinHeight + headBushingExtend],r=3);
 			//Bushing openings
 			translate([headBushingExtend/2,0,0]) rotate([0,90,0]) cylinder(h=bushingMinHeight + headBushingExtend+1,r=bushingDiameter/2,center=true);
@@ -42,7 +42,7 @@ module headDesignPrinted() {
 		}
 
 		//Top block
-		translate([0,0,15+2*explode]) difference() {
+		translate([0,0,15+2*explode]) render() difference() {
 			translate([headBushingExtend/2,headBushingExtend/2,0]) linear_extrude(height=bushingMinHeight/2) roundedSquare([bushingMinHeight + headBushingExtend,bushingMinHeight + headBushingExtend],r=3);
 			//Bushing openings
 			translate([0,headBushingExtend/2,0]) rotate([90,0,0]) cylinder(h=bushingMinHeight + headBushingExtend+1,r=bushingDiameter/2,center=true);

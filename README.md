@@ -9,10 +9,7 @@ Status
 The TITAN is under heavy development. The first prototype is still being assembled, and it has not printed yet.
 
 The design files are uploaded, but unfinished at the moment. The following parts are missing:
-* Motor brackets
 * Extruder
-* Bowden tube clamps
-* Z lifting system
 
 Parts
 =====
@@ -26,7 +23,7 @@ I did not make a full Bill Of Materials yet. But my currently used parts are:
 * 1x Ultimaker bowden tube
 * T5 timing belt. Multiple lengths cut from 2x 10T5/800 (You need a total of 6 belts of 5mm width, so you need to cut the 10T5 belts in half trough the center)
 * 4x NEMA14 motor. 1400 g-cm (20 oz-in)
-* 8x 626ZZ bearings
+* 8x 626-ZZ bearings
 
 Not yet defined:
 * Screws (lots of M3 screws)

@@ -122,21 +122,15 @@ module zScrewAssembly() {
 	translate([0,0, 1]) nutM6();
 	
 	if (bitIsSet(displayPrinted, 0)) {
-		translate([  0,0,1]) render() difference() {
-			gear(number_of_teeth=9, circular_pitch=490, gear_thickness = 7, rim_thickness = 7, hub_thickness = 7);
+		render() translate([  0,0,1]) render() difference() {
+			titanGear(teeth=9, height=7);
 			translate([0,0,-2]) cylinder(r=12/2,h=8,$fn=6);
 			translate([0,0,-1]) cylinder(r=6.5/2,h=10);
 		}
-		translate([-25,0,8]) rotate([180,0,0]) union() {
-			render() gear(number_of_teeth=9, circular_pitch=490, gear_thickness = 6, rim_thickness = 6, hub_thickness = 6);
-			render() translate([0,0,-8]) difference() {
-				import("pulleyAxes5mm.stl");
-				translate([0,0,18]) cube([20,20,20],center=true);
-			}
-		}
+		translate([-25,0,8]) rotate([180,0,0]) gearWithHub();
 	}
 	
-	if (bitIsSet(displayPrinted, 1)) difference() {
+	if (bitIsSet(displayPrinted, 1)) render() difference() {
 		translate([-14,0,9]) cube([57,36,18],center=true);
 		translate([  0,0,-1]) cylinder(r=16,h=11);
 		translate([  0,0,-1]) cylinder(r=14/2,h=30);

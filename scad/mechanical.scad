@@ -179,14 +179,19 @@ module fan40mm() {
 	}
 }
 
-module bearing626()
-{
+module bearingAny(r1, r2, h) {
 	if (bitIsSet(displayMechanics, 1)) color([0.8,0.8,0.8,0.8]) render() difference()
 	{
-		cylinder(r=19/2,h=6);
-		translate([0,0,-1]) cylinder(r=6/2,h=8);
+		cylinder(r=r1/2,h=h);
+		translate([0,0,-1]) cylinder(r=r2/2,h=h+2);
 	}
 }
+
+module bearing623() { bearingAny(10, 4, 4); }
+module bearing106() { bearingAny(10, 6, 3); }
+module bearing626() { bearingAny(19, 6, 6); }
+module bearing608() { bearingAny(22, 8, 6); }
+module bearing688() { bearingAny(16, 8, 5); }
 
 module bearingLM8UU()
 {
@@ -214,12 +219,29 @@ module threadedRod(d=6,h=150,center=false)
 	if (bitIsSet(displayMechanics, 0)) color([0.6,0.6,0.6,0.8]) cylinder(r=d/2,h=h,center=center);
 }
 
+/* Hobbed sleve which can be fitted on a 5mm motor axes for direct drive */
 module hobbedSleve()
 {
 	if (bitIsSet(displayMechanics, 1)) color([0.6,0.6,0.6,0.8]) {
 		cylinder(r=8/2,h=12.5);
 		cylinder(r=9/2,h=7.5);
 		translate([0,0,10]) rotate([90,0,0]) cylinder(r=3/2,h=8);
+	}
+}
+
+/* Ultimaker knurledBolt (V2) */
+module knurledBolt2() {
+	if (bitIsSet(displayMechanics, 0)) translate([0,0,-7.5]) union() {
+		color([0.6,0.6,0.6,0.8]) render() {
+			cylinder(r=5.5/2,h=38);
+			translate([0,0,38-3]) cylinder(r=8.0/2,h=3);
+			cylinder(r=8.0/2,h=38-5.2);
+			cylinder(r=15/2,h=6.5,$fn=6);
+			translate([0,0,6.5]) cylinder(r=17/2,h=1.0);
+			translate([0,0,7.5]) cylinder(r=15/2,h=6.5,$fn=6);
+			translate([0,0,13.5]) cylinder(r=17/2,h=1.0);
+		}
+		color([1,0,0,0.3]) translate([0,0,38-10-7]) cylinder(r=9/2,h=7);
 	}
 }
 

@@ -82,6 +82,36 @@ module caseSide() {
 	}
 }
 
+module caseSideRight() {
+	difference() {
+		union() {
+			caseSide();
+			translate([50,-40]) roundedSquare([50,50],8);
+		}
+		translate([45.5,-59.5]) roundedSquare([17,20],4);
+		translate([45.5,-59.5]) roundedSquare([17,20],4);
+		#translate([10,-69]) mirrored([26/2,26/2]) circle(r=3/2);
+
+		translate([28.8,-38.3]) {
+			translate([5,14]) circle(r=3.5/2);
+			translate([5,-14]) circle(r=3.5/2);
+			translate([35,15]) circle(r=3.5/2);
+			translate([37,-20]) hull() {
+				circle(r=3.5/2);
+				translate([0,-15]) circle(r=3.5/2);
+			}
+			translate([12,0]) circle(r=16/2-laserOffset);
+
+			hull() {
+				translate([25, 3]) circle(r=3);
+				translate([25,-2]) circle(r=3);
+				translate([55, 8]) circle(r=3);
+				translate([55,-7]) circle(r=3);
+			}
+		}
+	}
+}
+
 module caseBottom() {
 	difference() {
 		union() {
@@ -91,6 +121,7 @@ module caseBottom() {
 		}
 		mirrored([ 65, (180/2-caseThickness/2)]) woodConnector2();
 		rotate(90) mirrored([ 55, (180/2-caseThickness/2)]) woodConnector2();
+		translate([-90,-38]) roundedSquare([10,20]);
 		translate([headPosMin+hotendDistance+(headPosMax-headPosMin)/2, headPosMin+hotendDistance+(headPosMax-headPosMin)/2])
 		{
 			//Holes to access the screws for Z bed leveling
@@ -139,9 +170,9 @@ module bearingHolderPlate() {
 module case() {
 	translate([0, (90-caseThickness/2),-50]) rotate([0,90,90]) wood(h=caseThickness) caseFront();
 	translate([0, (90-caseThickness/2),-50]) rotate([0,90,90]) wood(h=caseThickness*0.5, type=1) caseFront(false);
-	translate([0,-(90-caseThickness/2),-50]) rotate([0,90,90]) wood(h=caseThickness) caseBack();
+	%translate([0,-(90-caseThickness/2),-50]) rotate([0,90,90]) wood(h=caseThickness) caseBack();
 	translate([ (90-caseThickness/2),0,-50]) rotate([0,90,0]) wood(h=caseThickness) caseSide();
-	translate([-(90-caseThickness/2),0,-50]) rotate([0,90,0]) wood(h=caseThickness) caseSide();
+	%translate([-(90-caseThickness/2),0,-50]) rotate([0,90,0]) wood(h=caseThickness) caseSideRight();
 	translate([0,0,-50-85]) wood(h=caseThickness) caseBottom();
 	
 	translate([ (90+caseThickness/2), 70,0]) rotate([0,90,0]) wood(h=caseThickness, type=1) bearingPlate();

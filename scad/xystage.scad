@@ -56,7 +56,7 @@ module bushing(h=20)
 }
 
 module beltClamp(h=9,w=16) {
-	if (bitIsSet(displayPrinted, 4)) difference() {
+	if (bitIsSet(displayPrinted, 4)) render() difference() {
 		linear_extrude(height=h,convexity=2) difference() {
 			square([w,12],center=true);
 		}
